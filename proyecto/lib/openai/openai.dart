@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class OpenAI {
 
  //API_KEY: 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
-  final String apiKey;
+  String apiKey ="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";
 
   OpenAI({required this.apiKey});
 
@@ -17,7 +17,7 @@ class OpenAI {
       },
       body: jsonEncode({
         'prompt': prompt,
-        'max_tokens': 50,
+        'max_tokens': 200,
         'n': 1,
         'stop': '\n',
       }),
@@ -29,6 +29,18 @@ class OpenAI {
       return text;
     } else {
       throw Exception('Failed to generate text: ${response.statusCode}');
+    }
+  }
+  void main(String consulta) async {
+    if (consulta.isEmpty) {
+      print("Usage: generateText(string)");
+    } else {
+      try {
+        var block = await generateText(consulta);
+        print(block);
+      } catch (exception) {
+        print(exception);
+      }
     }
   }
 }
